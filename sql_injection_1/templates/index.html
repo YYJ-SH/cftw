@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="min-h-screen" style="background: linear-gradient(to bottom right, #0f172a, #1e3a8a);">
-    <nav class="bg-gray-900 border-b border-slate-700">
+    <nav class="bg-slate-800 border-b border-slate-700">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-2">
@@ -26,68 +26,88 @@
         </div>
     </nav>
 
-    <div class="max-w-6xl mx-auto mt-10 flex items-center justify-between px-4">
-        <div class="w-1/2 pr-10">
-            <h1 class="text-4xl font-bold text-white mb-6">화락하고 오래 성하는<br>지키는 장인들</h1>
-            <p class="text-lg text-gray-300 mb-8">성신여대 보안 전문 동아리 융보공에서<br>차세대 보안 전문가의 꿈을 이루세요.</p>
-            <div class="space-y-4 text-gray-300">
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-shield-alt text-blue-400"></i>
-                    <span>침투 테스팅 도구 실습</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-laptop-code text-blue-400"></i>
-                    <span>모의해킹 프로젝트</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-network-wired text-blue-400"></i>
-                    <span>네트워크 보안 분석</span>
+    <div class="container mx-auto mt-10 px-4">
+        <div class="flex flex-wrap items-start justify-between">
+            <!-- 왼쪽 섹션 -->
+            <div class="w-full lg:w-1/2 lg:pr-10 mb-8 lg:mb-0 flex flex-col items-center lg:items-start">
+                <div class="max-w-lg w-full">
+                    <h1 class="text-4xl font-bold text-white mb-6 ">화락하고 오래 성하는<br>지키는 장인들</h1>
+                    <p class="text-lg text-gray-300 mb-8 ">성신여대 보안 전문 동아리 융보공에서<br>차세대 보안 전문가의 꿈을 이루세요.</p>
+                    
+                    <div class="space-y-4 text-gray-300 mb-8 text-center">
+                        <div class="flex items-center space-x-3 text-center">
+                            <i class="fas fa-shield-alt text-blue-400 "></i>
+                            <span>침투 테스팅 도구 실습</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-laptop-code text-blue-400"></i>
+                            <span>모의해킹 프로젝트</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-network-wired text-blue-400"></i>
+                            <span>네트워크 보안 분석</span>
+                        </div>
+                    </div>
+
+                    <!-- Security Tip 섹션 -->
+                    <div class="bg-slate-800 rounded-lg border border-slate-700 p-6 w-full">
+                        <h3 class="text-xl font-semibold text-white mb-4">Today's Security Tip</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-info-circle text-blue-400 mt-1"></i>
+                                <div>
+                                    <p class="text-gray-300 mb-2">데이터베이스 보안의 기초: 정보 스키마 이해하기</p>
+                                    <p class="text-sm text-gray-400">많은 개발자들이 표준 SQL의 information_schema를 활용하지만, 
+                                    일부 DB에서는 sqlite_master와 같은 시스템 테이블을 통해 메타데이터를 관리합니다.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-database text-blue-400 mt-1"></i>
+                                <div>
+                                    <p class="text-gray-300 mb-2">데이터 조회 시 주의사항</p>
+                                    <p class="text-sm text-gray-400">여러 테이블의 데이터를 결합(Union)할 때는 컬럼 수와 데이터 타입의 일치 여부를 확인하세요.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="w-1/2 max-w-md">
-            <div class="bg-slate-800 p-8 shadow-2xl rounded-lg border border-slate-700">
-                <h2 class="text-2xl font-bold mb-6 text-center text-white">Member Login</h2>
-                <form action="/login" method="post" class="space-y-6">
-                    <div>
-                        <label for="uid" class="block text-sm font-medium text-gray-300 mb-1">아이디</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-user text-slate-500"></i>
+            <!-- 오른쪽 로그인 섹션 -->
+            <div class="w-full lg:w-1/2 lg:max-w-md">
+                <div class="bg-slate-800 p-8 shadow-2xl rounded-lg border border-slate-700">
+                    <h2 class="text-2xl font-bold mb-6 text-center text-white">Member Login</h2>
+                    <form action="/login" method="post" class="space-y-6">
+                        <div>
+                            <label for="uid" class="block text-sm font-medium text-gray-300 mb-1">아이디</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-slate-500"></i>
+                                </div>
+                                <input type="text" id="uid" name="uid" 
+                                    class="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white"
+                                    placeholder="아이디를 입력하세요">
                             </div>
-                            <input type="text" id="uid" name="uid" 
-                                class="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-blue"
-                                placeholder="아이디를 입력하세요">
                         </div>
-                    </div>
-                    <div>
-                        <label for="pwd" class="block text-sm font-medium text-gray-300 mb-1">비밀번호</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-slate-500"></i>
+                        <div>
+                            <label for="pwd" class="block text-sm font-medium text-gray-300 mb-1">비밀번호</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-slate-500"></i>
+                                </div>
+                                <input type="password" id="pwd" name="pwd" 
+                                    class="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white"
+                                    placeholder="비밀번호를 입력하세요">
                             </div>
-                            <input type="password" id="pwd" name="pwd" 
-                                class="w-full pl-10 pr-4 py-2 bg-slate-700 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-blue-300"
-                                placeholder="비밀번호를 입력하세요">
                         </div>
+                        <button type="submit" 
+                            class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
+                            로그인
+                        </button>
+                    </form>
+                    <div class="mt-4 text-xs text-gray-500 text-center">
+                        * 시스템 점검으로 인해 일부 테이블(user_info)의 접근이 제한될 수 있습니다.
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input type="checkbox" id="remember" class="h-4 w-4 bg-slate-700 border-slate-600 rounded text-blue-500">
-                            <label for="remember" class="ml-2 block text-sm text-gray-300">로그인 상태 유지</label>
-                        </div>
-                        <a href="#" class="text-sm text-blue-400 hover:text-blue-300">비밀번호 찾기</a>
-                    </div>
-                    <button type="submit" 
-                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200">
-                        로그인
-                    </button>
-                </form>
-                <div class="mt-6 text-center">
-                    <p class="text-sm text-gray-400">신입 부원 모집 중! 
-                        <a href="#" class="text-blue-400 hover:text-blue-300">지원하기</a>
-                    </p>
                 </div>
             </div>
         </div>

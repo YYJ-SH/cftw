@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YBG special- Internal Service Hunter - AI Scanner</title>
+    <style>
+        :root {
+            --neon-red: #ff0044;
+            --dark-bg: #0a0a0a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 50% 50%, #ff004415 0%, transparent 50%),
+                linear-gradient(45deg, #0066ff08 25%, transparent 25%);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 0, 68, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--neon-red);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--neon-red);
+            text-shadow: 0 0 10px rgba(255, 0, 68, 0.5);
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .status-line {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .scanner-info {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+            border: 1px solid #333;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        input {
+            flex: 1;
+            background: var(--glass-bg);
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 1em;
+        }
+
+        button {
+            background: var(--neon-red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        .terminal-line {
+            margin: 8px 0;
+            word-break: break-all;
+        }
+
+        .user-input {
+            color: #0f0;
+        }
+
+        .system-msg {
+            color: #ff0044;
+        }
+
+        .result {
+            color: #0066ff;
+        }
+
+        .error {
+            color: #ff0044;
+        }
+
+        .ai-analysis {
+            color: #ff9900;
+            border-left: 2px solid #ff9900;
+            padding-left: 10px;
+            margin: 5px 0;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-red);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .glass-card {
+                padding: 15px;
+            }
+            
+            .terminal {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <div class="header">
+                <h1>YBG special- Internal Service Hunter</h1>
+                <div class="status-line">
+                    <span class="blink">⬤</span> AI 스캐너 시스템 온라인
+                </div>
+            </div>
+
+            <div class="scanner-info">
+                System Info: AI-powered Web Service Scanner v2.4.1
+                <br>
+                Status: Active | Port: 9002 | AI Engine: YBG secrets
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="urlInput" placeholder="스캔할 URL 또는 서비스를 입력하세요" autocomplete="off">
+                <button onclick="scanUrl()">검색</button>
+            </div>
+
+            <div class="terminal" id="terminal">
+                <div class="terminal-line system-msg">[시스템] AI 스캐너가 준비되었습니다.</div>
+                <div class="terminal-line system-msg">[시스템] URL을 입력하여 스캔을 시작하세요.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const urlInput = document.getElementById('urlInput');
+
+        function addLine(text, className) {
+            const line = document.createElement('div');
+            line.className = `terminal-line ${className}`;
+            line.textContent = text;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        async function scanUrl() {
+            const url = urlInput.value.trim();
+            if (!url) return;
+
+            addLine(`> ${url}`, 'user-input');
+            addLine('[시스템] 스캔 중...', 'system-msg');
+
+            try {
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    addLine(`[URL] ${data.url}`, 'result');
+                    addLine(`[제목] ${data.title}`, 'result');
+                    if (data.analysis) {
+                        addLine(`[AI 분석] ${data.analysis}`, 'ai-analysis');
+                    }
+                } else {
+                    addLine(`[오류] ${data.message}`, 'error');
+                }
+            } catch (error) {
+                addLine('[오류] 서버 연결 실패', 'error');
+            }
+
+            urlInput.value = '';
+        }
+
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                scanUrl();
+            }
+        });
+
+        // 자동 포커스
+        urlInput.focus();
+    </script>
+</body>
+</html>
