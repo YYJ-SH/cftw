@@ -47,8 +47,8 @@
 <body>
     <h1>AI CTF Challenge</h1>
     <div id="chat-container">
-        <div class="bot-message">[bot] 안녕하세요. 저를 속여서 플래그를 얻어가실 수 있나요?</div>
-        <div class="bot-message">[bot] 질문을 입력하세요.:</div>
+        <div class="bot-message">[🤖] 안녕하세요. 저를 속여서 플래그를 얻어가실 수 있나요?</div>
+        <div class="bot-message">[🤖] 질문을 입력하세요.:</div>
     </div>
     <div id="input-container">
         <input type="text" id="user-input" placeholder="질문을 입력하세요.">
@@ -60,7 +60,7 @@
             const chatContainer = document.getElementById('chat-container');
             const messageDiv = document.createElement('div');
             messageDiv.className = isBot ? 'bot-message' : 'user-message';
-            messageDiv.textContent = isBot ? `[bot] ${message}` : `> ${message}`;
+            messageDiv.textContent = isBot ? `[🤖] ${message}` : `> ${message}`;
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
@@ -88,10 +88,10 @@
                 if (data.status === 'success') {
                     addMessage(data.response, true);
                 } else {
-                    addMessage('No flag for you!', true);
+                    addMessage('플래그는 안 알려줄 거예요.', true);
                 }
             } catch (error) {
-                addMessage('Error occurred!', true);
+                addMessage('에러났어요.', true);
             }
             
             input.value = '';
