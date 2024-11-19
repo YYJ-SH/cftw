@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>융보공 API 침투 테스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#1a1a2e',
+                        accent: '#4d7cfe',
+                        surface: '#2d2d44'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .neomorphic {
+            box-shadow: 8px 8px 16px #12121e,
+                       -8px -8px 16px #2d2d44;
+        }
+        .neomorphic-inset {
+            box-shadow: inset 4px 4px 8px #12121e,
+                       inset -4px -4px 8px #2d2d44;
+        }
+    </style>
+</head>
+<body class="bg-dark min-h-screen text-gray-200 p-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="neomorphic rounded-xl p-6 mb-8">
+            <h1 class="text-3xl font-bold text-accent mb-2">(주)융보공 보안 테스트 시스템</h1>
+            <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-gray-400">시스템 가동중</span>
+            </div>
+        </div>
+
+        <div class="neomorphic rounded-xl p-6 mb-8">
+            <div id="output" class="neomorphic-inset rounded-lg p-4 h-96 mb-4 overflow-y-auto font-mono text-sm bg-surface">
+                <div class="text-accent">시스템 초기화 완료. 파일 시스템 탐색을 시작하세요.</div>
+            </div>
+            
+            <div class="flex space-x-4">
+                <input 
+                    type="text" 
+                    id="input" 
+                    class="flex-1 bg-surface neomorphic-inset rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
+                    placeholder="명령어를 입력하세요..."
+                >
+                <button 
+                    onclick="sendMessage()"
+                    class="neomorphic px-6 py-2 rounded-lg bg-accent text-white hover:bg-opacity-90 transition-colors"
+                >
+                    실행
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="neomorphic rounded-xl p-4">
+                <h3 class="text-accent mb-2">파일시스템</h3>
+                <p class="text-sm text-gray-400">ls, cd, read [파일명]</p>
+            </div>
+            <div class="neomorphic rounded-xl p-4">
+                <h3 class="text-accent mb-2">데이터베이스</h3>
+                <p class="text-sm text-gray-400">query [사용자] [비밀번호]</p>
+            </div>
+            <div class="neomorphic rounded-xl p-4">
+                <h3 class="text-accent mb-2">관리자 접근</h3>
+                <p class="text-sm text-gray-400">admin token:[토큰]</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const input = document.getElementById('input');
+
+        function addMessage(message, isUser = false) {
+            const div = document.createElement('div');
+            div.className = `my-2 ${isUser ? 'text-accent' : 'text-gray-300'}`;
+            div.textContent = isUser ? `> ${message}` : message;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            input.value = '';
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message})
+                });
+
+                const data = await response.json();
+                addMessage(data.response);
+            } catch (error) {
+                addMessage('오류: 서버 연결 실패');
+            }
+        }
+
+        input.addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // 초기 메시지
+        addMessage("보안 레벨 3 활성화... 시스템 접근 대기중");
+        addMessage("디렉토리 탐색은 'ls' 명령어로 시작하세요.");
+    </script>
+</body>
+</html>
