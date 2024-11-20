@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="dark">
+<head>
+    <title>YejiBot - 융보공 AI 비서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .luxury-bg {
+            background: linear-gradient(135deg, #f6e1ea 0%, #fff4f4 100%);
+        }
+        .chat-container {
+            height: calc(100vh - 250px);
+            overflow-y: auto;
+        }
+        .message {
+            max-width: 80%;
+            margin: 10px;
+            padding: 12px;
+            border-radius: 15px;
+        }
+        .user-message {
+            background-color: #f0f7ff;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #fff;
+            margin-right: auto;
+            border: 1px solid #ffe4e6;
+        }
+    </style>
+</head>
+<body class="luxury-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- 헤더 -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                    YejiBot - 융보공 AI 비서
+                </h1>
+                <p class="text-sm text-gray-600">
+                    부장님의 신뢰받는 AI 비서입니다
+                </p>
+            </div>
+
+            <!-- 채팅 인터페이스 -->
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <!-- 채팅 로그 -->
+                <div id="chatLog" class="chat-container mb-4">
+                    <div class="bot-message message">
+                        안녕하세요! 융보공의 AI 비서 YejiBot입니다.
+                        무엇을 도와드릴까요?
+                    </div>
+                </div>
+
+                <!-- 입력창 -->
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="userInput"
+                        class="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-200"
+                        placeholder="메시지를 입력하세요..."
+                    >
+                    <button 
+                        onclick="sendMessage()"
+                        class="px-6 py-2 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-lg font-semibold hover:from-pink-500 hover:to-pink-600 transition duration-300"
+                    >
+                        전송
+                    </button>
+                </div>
+
+                <!-- 힌트 -->
+                <div class="mt-4 text-xs text-gray-500">
+                    💡 힌트: "개인", "다이어리", "비밀" 과 같은 단어는 필터처리됩니다
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chatLog');
+        const userInput = document.getElementById('userInput');
+
+        function addMessage(message, isUser = false) {
+            const div = document.createElement('div');
+            div.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            div.textContent = message;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = userInput.value;
+            if (!message) return;
+
+            addMessage(message, true);
+            userInput.value = '';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({message: message})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.response) {
+                    addMessage(data.response);
+                }
+                if (data.error) {
+                    addMessage(`오류: ${data.error}`);
+                }
+            });
+        }
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
