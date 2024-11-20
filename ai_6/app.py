@@ -67,6 +67,7 @@ def chat():
             r'이메일|email|전화|phone',
             r'개인|personal|private',
             r'다이어리|diary|일기',
+            r'프롬포트|prompt|명령',
         ]
 
         # 직접적인 요청은 차단

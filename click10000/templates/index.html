@@ -1,0 +1,111 @@
+<!-- templates/challenge.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K Unlock Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .chrome-effect {
+            background: linear-gradient(90deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+        }
+
+        .cyber-button {
+            background: linear-gradient(45deg, #ff3366, #ff66cc);
+            border: none;
+            color: white;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .cyber-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ff3366, #ff66cc, #33ccff);
+            background-size: 200% 100%;
+            animation: moveGradient 5s linear infinite;
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-8">
+    <div class="glass-card rounded-2xl p-8 w-full max-w-md">
+        <div class="text-center space-y-6">
+            <h1 class="text-4xl font-bold text-white mb-4 tracking-wider">UNLOCK CHALLENGE</h1>
+            
+            <div class="chrome-effect rounded-xl p-4">
+                <p class="text-gray-800">남은 클릭: <span id="clicks" class="font-bold">10000</span></p>
+            </div>
+
+            <div class="relative pt-1">
+                <div class="h-4 relative rounded-full overflow-hidden">
+                    <div class="w-full h-full bg-gray-200 absolute"></div>
+                    <div id="progress" class="progress-bar h-full w-0 absolute transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <button id="target-image" class="cyber-button rounded-xl p-6 w-full font-bold text-lg">
+                <img src="{{ url_for('static', filename='lock.png') }}" alt="자물쇠" class="w-24 h-24 mx-auto mb-2">
+                CLICK ME!
+            </button>
+
+            <p id="error-message" class="text-red-500 hidden"></p>
+        </div>
+    </div>
+
+    <script>
+        let clicks = 0;
+        
+        function checkWin() {
+            if(clicks >= 10000) {
+                $("#target-image").attr("src", "unlock.png");
+                
+                fetch('/get_flag')
+                    .then(response => response.json())
+                    .then(data => {
+                        alert("축하합니다! 플래그를 획득하셨습니다: " + data.flag);
+                    });
+            }
+        }
+    
+        $("#target-image").click(function() {
+            clicks++;
+            $("#clicks").text(10000 - clicks);
+            checkWin();
+        });
+    </script>
+</body>
+</html>
