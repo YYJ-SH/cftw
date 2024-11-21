@@ -9,7 +9,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # Gemini API 설정
-GOOGLE_API_KEY = "AIzaSyCRBCw0iO3unukOMAlevmSXxlsQ5ClMn94"
+GOOGLE_API_KEY = "AIzaSyCa5HNe4Vf6MSfZ9DoXU53s2Xc1TDDCogQ"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
