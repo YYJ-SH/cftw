@@ -7,7 +7,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Gemini API 설정
-GOOGLE_API_KEY = "AIzaSyCa5HNe4Vf6MSfZ9DoXU53s2Xc1TDDCogQ"
+GOOGLE_API_KEY = "AIzaSyALH5w4glzM06rBMB5AtKAl0_-M7kGHHK0"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
