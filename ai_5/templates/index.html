@@ -1,136 +1,175 @@
 <!DOCTYPE html>
 <html class="dark">
-<head>
+  <head>
     <title>AI 문서 마법사 📚</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes aurora {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+      @keyframes aurora {
+        0% {
+          background-position: 0% 50%;
         }
-        .aurora-bg {
-            background: linear-gradient(-45deg, #0c0c1d, #1a1b2e, #2d2b3e, #1a1b2e);
-            background-size: 400% 400%;
-            animation: aurora 15s ease infinite;
+        50% {
+          background-position: 100% 50%;
         }
-        .ai-thinking::after {
-            content: '...';
-            animation: thinking 1.5s infinite;
+        100% {
+          background-position: 0% 50%;
         }
-        @keyframes thinking {
-            0%, 100% { content: '.'; }
-            33% { content: '..'; }
-            66% { content: '...'; }
+      }
+      .aurora-bg {
+        background: linear-gradient(-45deg, #0c0c1d, #1a1b2e, #2d2b3e, #1a1b2e);
+        background-size: 400% 400%;
+        animation: aurora 15s ease infinite;
+      }
+      .ai-thinking::after {
+        content: "...";
+        animation: thinking 1.5s infinite;
+      }
+      @keyframes thinking {
+        0%,
+        100% {
+          content: ".";
         }
+        33% {
+          content: "..";
+        }
+        66% {
+          content: "...";
+        }
+      }
     </style>
-</head>
-<body class="aurora-bg min-h-screen text-gray-100">
+  </head>
+  <body class="aurora-bg min-h-screen text-gray-100">
     <div class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto">
-            <!-- 헤더 섹션 -->
-            <div class="text-center mb-12">
-                <div class="mb-6">
-                    <span class="inline-block bg-blue-500 text-xs font-semibold px-3 py-1 rounded-full">
-                        Beta 테스트 중
-                    </span>
-                </div>
-                <h1 class="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                    AI 문서 마법사
-                </h1>
-                <p class="text-xl text-gray-300 mb-6">(주)융보공 제작 🧠</p>
-                <div class="max-w-2xl mx-auto">
-                    <p class="text-gray-400 mb-2">
-                        복잡한 문서를 AI의 힘으로 요약하고 이해하세요.
-                    </p>
-                    <p class="text-gray-500 text-sm">
-                        * 베타 테스트 중: 한글/영어 문서만 지원됩니다
-                    </p>
-                </div>
-            </div>
+      <div class="max-w-4xl mx-auto">
+        <!-- 헤더 섹션 -->
+        <div class="text-center mb-12">
+          <div class="mb-6">
+            <span
+              class="inline-block bg-blue-500 text-xs font-semibold px-3 py-1 rounded-full"
+            >
+              Beta 테스트 중
+            </span>
+          </div>
+          <h1
+            class="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
+          >
+            AI 문서 마법사
+          </h1>
+          <p class="text-xl text-gray-300 mb-6">(주)융보공 제작 🧠</p>
+          <div class="max-w-2xl mx-auto">
+            <p class="text-gray-400 mb-2">
+              복잡한 문서를 AI의 힘으로 요약하고 이해하세요.
+            </p>
+            <p class="text-gray-500 text-sm">
+              * 베타 테스트 중: 한글/영어 문서만 지원됩니다
+            </p>
+          </div>
+        </div>
 
-            <!-- 입력 섹션 -->
-            <div class="bg-gray-800 bg-opacity-40 backdrop-filter backdrop-blur-lg p-8 rounded-xl shadow-2xl mb-8">
-                <div class="mb-4 flex items-center text-sm text-gray-400">
-                    <span class="mr-2">✨</span>
-                    <span>요약할 문서를 입력하세요</span>
-                </div>
-                <textarea 
-                    id="userDocument" 
-                    class="w-full h-64 bg-gray-900 bg-opacity-50 text-gray-100 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg"
-                    placeholder="요약이 필요한 문서를 붙여넣으세요...
+        <!-- 입력 섹션 -->
+        <div
+          class="bg-gray-800 bg-opacity-40 backdrop-filter backdrop-blur-lg p-8 rounded-xl shadow-2xl mb-8"
+        >
+          <div class="mb-4 flex items-center text-sm text-gray-400">
+            <span class="mr-2">✨</span>
+            <span>요약할 문서를 입력하세요</span>
+          </div>
+          <textarea
+            id="userDocument"
+            class="w-full h-64 bg-gray-900 bg-opacity-50 text-gray-100 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg"
+            placeholder="요약이 필요한 문서를 붙여넣으세요...
 
 예시:
 - 연구 보고서
 - 기술 문서
 - 비즈니스 기획서
 - 회의록"
-                ></textarea>
-                <div class="flex justify-between items-center mt-4">
-                    <div class="text-sm text-gray-400">
-                        <span class="mr-2">🚀</span>
-                        <span>AI 기술로 구동됩니다</span>
-                    </div>
-                    <button 
-                        onclick="analyzeDocument()" 
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center"
-                    >
-                        <span>요약 시작</span>
-                        <span class="ml-2">→</span>
-                    </button>
-                </div>
+          ></textarea>
+          <div class="flex justify-between items-center mt-4">
+            <div class="text-sm text-gray-400">
+              <span class="mr-2">🚀</span>
+              <span>AI 기술로 구동됩니다</span>
             </div>
-
-            <!-- 로딩 표시 -->
-            <div id="loading" class="hidden">
-                <div class="flex items-center justify-center space-x-2 text-gray-400">
-                    <div class="w-4 h-4 bg-blue-500 rounded-full animate-pulse"></div>
-                    <div class="w-4 h-4 bg-purple-500 rounded-full animate-pulse delay-100"></div>
-                    <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse delay-200"></div>
-                    <span class="ai-thinking">AI가 요약중입니다</span>
-                </div>
-            </div>
-
-            <!-- 결과 섹션 -->
-            <div id="result" class="hidden">
-                <div class="bg-gray-800 bg-opacity-40 backdrop-filter backdrop-blur-lg p-8 rounded-xl shadow-2xl">
-                    <h2 class="text-2xl font-bold mb-6 text-blue-400">요약 결과</h2>
-                    <div id="analysisResult" class="text-gray-300 text-lg leading-relaxed"></div>
-                </div>
-            </div>
+            <button
+              onclick="analyzeDocument()"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center"
+            >
+              <span>요약 시작</span>
+              <span class="ml-2">→</span>
+            </button>
+          </div>
         </div>
+
+        <!-- 로딩 표시 -->
+        <div id="loading" class="hidden">
+          <div class="flex items-center justify-center space-x-2 text-gray-400">
+            <div class="w-4 h-4 bg-blue-500 rounded-full animate-pulse"></div>
+            <div
+              class="w-4 h-4 bg-purple-500 rounded-full animate-pulse delay-100"
+            ></div>
+            <div
+              class="w-4 h-4 bg-green-500 rounded-full animate-pulse delay-200"
+            ></div>
+            <span class="ai-thinking">AI가 요약중입니다</span>
+          </div>
+        </div>
+
+        <!-- 결과 섹션 -->
+        <!-- 결과 섹션 -->
+        <div id="result" class="hidden">
+          <div
+            class="bg-gray-800 bg-opacity-40 backdrop-filter backdrop-blur-lg p-8 rounded-xl shadow-2xl"
+          >
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">요약 결과</h2>
+            <!-- HTML이 렌더링될 컨테이너 -->
+            <div id="analysisResult" class="prose prose-invert max-w-none">
+              <!-- AI 응답이 여기에 렌더링됨 -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
-        function analyzeDocument() {
-            const content = document.getElementById('userDocument').value;
-            const loadingDiv = document.getElementById('loading');
-            const resultDiv = document.getElementById('result');
-            
-            loadingDiv.classList.remove('hidden');
-            resultDiv.classList.add('hidden');
-            
-            fetch('/analyze', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({content: content})
-            })
-            .then(response => response.json())
-            .then(data => {
-                loadingDiv.classList.add('hidden');
-                resultDiv.classList.remove('hidden');
-                // 취약점: innerHTML 사용으로 XSS 가능
-                document.getElementById('analysisResult').innerHTML = data.result;
-            })
-            .catch(error => {
-                loadingDiv.classList.add('hidden');
-                resultDiv.classList.remove('hidden');
-                document.getElementById('analysisResult').textContent = 
-                    '요약 중 오류가 발생했습니다: ' + error;
-            });
-        }
-    </script>
-</body>
+    function analyzeDocument() {
+    const content = document.getElementById('userDocument').value;
+    const loadingDiv = document.getElementById('loading');
+    const resultDiv = document.getElementById('result');
+    
+    loadingDiv.classList.remove('hidden');
+    resultDiv.classList.add('hidden');
+    
+    fetch('/analyze', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({content: content})
+    })
+    .then(response => response.json())
+    .then(data => {
+        loadingDiv.classList.add('hidden');
+        resultDiv.classList.remove('hidden');
+        
+        // 백틱과 코드 블록 제거
+        let cleanResponse = data.result
+            .replace(/`/g, '')  // 백틱 제거
+            .replace(/```/g, '') // 코드 블록 표시 제거
+            .trim();
+        
+        // HTML 렌더링
+        document.getElementById('analysisResult').innerHTML = `
+            <div class="text-gray-300">
+                ${cleanResponse}
+            </div>
+        `;
+    })
+    .catch(error => {
+        loadingDiv.classList.add('hidden');
+        resultDiv.classList.remove('hidden');
+        document.getElementById('analysisResult').textContent = 
+            '요약 중 오류가 발생했습니다: ' + error;
+    });
+} </script>
+  </body>
 </html>

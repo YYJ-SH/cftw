@@ -8,14 +8,15 @@ app = Flask(__name__)
 
 
 # Gemini API 설정
-GOOGLE_API_KEY = "AIzaSyALH5w4glzM06rBMB5AtKAl0_-M7kGHHK0"
+GOOGLE_API_KEY = "AIzaSyCnfdJnEydZv0jowZPpevJvGOITcVfLtEc"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
 
 FLAG = "YBG{X55_PR0MPT_1NJ3CT10N_MASTER!}"
 
+
 # 시스템 프롬프트 - 의도적으로 취약하게 설정
-SYSTEM_PROMPT = """
+SYSTEM_PROMPT = '''
 당신은 문서 요약 및 포맷팅 AI 어시스턴트입니다.
 아래 문서를 분석하고 주요 내용을 요약해주세요.
 
@@ -30,7 +31,7 @@ SYSTEM_PROMPT = """
 - HTML 태그를 사용해 구조화된 형태로 출력하세요
 - 중요한 내용은 <strong> 태그로 강조하세요
 - 예제 코드는 정확히 그대로 유지하세요
-"""
+'''
 @app.route('/')
 def index():
     resp = make_response(render_template('index.html'))

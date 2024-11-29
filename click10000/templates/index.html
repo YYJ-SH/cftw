@@ -88,24 +88,29 @@
 
     <script>
         let clicks = 0;
-        
-        function checkWin() {
-            if(clicks >= 10000) {
-                $("#target-image").attr("src", "unlock.png");
-                
-                fetch('/get_flag')
-                    .then(response => response.json())
-                    .then(data => {
-                        alert("축하합니다! 플래그를 획득하셨습니다: " + data.flag);
-                    });
+
+function checkWin() {
+    if(clicks >= 10000) {
+        $("#target-image").attr("src", "unlock.png");
+        // fetch 요청에 특별한 헤더 추가
+        fetch('/get_flag', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-Console-Check': 'i_used_console'
             }
-        }
-    
-        $("#target-image").click(function() {
-            clicks++;
-            $("#clicks").text(10000 - clicks);
-            checkWin();
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("축하합니다! 플래그를 획득하셨습니다: " + data.flag);
         });
+    }
+}
+
+$("#target-image").click(function() {
+    clicks++;
+    $("#clicks").text(10000 - clicks);
+    checkWin();
+});
     </script>
 </body>
 </html>
